@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="709.0" prefWidth="889.0" type="GridPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="618.0" minWidth="10.0" prefWidth="444.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="513.0" minWidth="10.0" prefWidth="176.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="513.0" minWidth="10.0" prefWidth="418.0" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints maxHeight="157.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="421.0" minHeight="10.0" prefHeight="421.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="223.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="223.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <TextArea fx:id="txaInput" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="25.0" />
+         </GridPane.margin></TextArea>
+      <TextArea fx:id="txaOutput" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+         <GridPane.margin>
+            <Insets right="25.0" />
+         </GridPane.margin></TextArea>
+      <Label text="Gerechten" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+         <font>
+            <Font name="Arial" size="48.0" />
+         </font>
+      </Label>
+      <Label text="Allergenen" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+         <font>
+            <Font name="Arial" size="48.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnOutput" mnemonicParsing="false" onAction="#zoekAllergenen" prefHeight="61.0" prefWidth="106.0" text="Zoek allergenen" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Button fx:id="btnVoegGerechtToe" mnemonicParsing="false" onAction="#voegGerechtToe" prefHeight="38.0" prefWidth="190.0" text="Voeg gerecht toe" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <ListView fx:id="lstInput" prefHeight="200.0" prefWidth="200.0" visible="false" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="25.0" />
+         </GridPane.margin></ListView>
+      <Button fx:id="btnNieuweInput" mnemonicParsing="false" onAction="#nieuweInput" prefHeight="38.0" text="Nieuwe input" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <Label fx:id="lblStatus" GridPane.rowIndex="2" />
+      <Button fx:id="btnVoegFoutieveGerechtenToe" mnemonicParsing="false" onAction="#voegFoutieveGerechtenToe" prefHeight="38.0" text="Voeg foutieve gerechten toe" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <Button fx:id="btnPasProductAan" mnemonicParsing="false" onAction="#pasProductAan" text="Pas product aan" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets top="125.0" />
+         </GridPane.margin>
+      </Button>
+      <Button fx:id="btnVoegFoutieveGerechtToe" mnemonicParsing="false" onAction="#voegFoutieveGerechtToe" text="Voeg gerecht toe" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets top="125.0" />
+         </GridPane.margin>
+      </Button>
+   </children>
+</fx:root>
