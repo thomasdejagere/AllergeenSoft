@@ -32,7 +32,7 @@ public class GerechtDAO {
     }
 
     public void addGerecht(Gerecht gerecht) throws SQLException {
-        Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Esthio", "esthio", "dd4fm7xc");
+        Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Esthio", "esthio", "d4fm7xc");
         Statement statement = con.createStatement();
         int vorigeID = (int) em.createQuery("SELECT MAX(g.id) FROM Gerecht g").getSingleResult();
         vorigeID++;

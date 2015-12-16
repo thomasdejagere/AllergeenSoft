@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javax.swing.JOptionPane;
 import service.AllergeenService;
 import service.GerechtService;
 
@@ -19,14 +20,15 @@ import service.GerechtService;
  * @author Thomas
  */
 public class Controller {
+
     private List<Gerecht> gerechten;
     private List<Allergeen> allergenen;
     private List<GerechtSoort> gerechtSoorten;
     private GerechtService gerechtService;
     private AllergeenService allergeenService;
     private GerechtSoortService gerechtSoortService;
-    
-    public Controller() throws SQLException{
+
+    public Controller() throws SQLException {
         gerechten = new ArrayList<>();
         allergenen = new ArrayList<>();
         gerechtSoorten = new ArrayList<>();
@@ -37,62 +39,68 @@ public class Controller {
         allergenen = allergeenService.geefAllergenen();
         gerechtSoorten = gerechtSoortService.geefGerechtSoorten();
     }
-    public void addGerecht(String naam) throws SQLException{
+
+    public void addGerecht(String naam) throws SQLException {
         Gerecht gerecht = new Gerecht();
         gerecht.setNaam(naam);
         gerechten.add(gerecht);
         gerechtService.add(gerecht);
     }
+
     public void addGerecht(String naam, String soort) throws SQLException {
         Gerecht gerecht = new Gerecht();
         gerecht.setNaam(naam);
-        if(geefSoort(soort) == null){
+        if (geefSoort(soort) == null) {
             gerecht.setSoort(null);
+        } else {
+            gerecht.setSoort(geefSoort(soort));
         }
-        else
-        gerecht.setSoort(geefSoort(soort));
-        
+
         gerechten.add(gerecht);
         gerechtService.add(gerecht);
     }
-    public void removeGerecht(String naam){
+
+    public void removeGerecht(String naam) {
         gerechten.remove(geefGerecht(naam));
         gerechtService.remove(geefGerecht(naam));
     }
-    public void addAllergeen(String gerecht, String allergeen){
+
+    public void addAllergeen(String gerecht, String allergeen) {
         Allergeen a = allergeenService.geefAllergeen(allergeen);
         geefGerecht(gerecht).addAllergeen(a);
         //gerechtService.update(geefGerecht(gerecht));
     }
-    public void removeAllergeen(String gerecht, String allergeen){
+
+    public void removeAllergeen(String gerecht, String allergeen) {
         Allergeen a = geefAllergeen(allergeen);
         geefGerecht(gerecht).removeAllergeen(a);
         //gerechtService.update(geefGerecht(gerecht));
     }
-    private Allergeen geefAllergeen(String allergeen){
+
+    private Allergeen geefAllergeen(String allergeen) {
         return allergeenService.geefAllergeen(allergeen);
     }
-    public Gerecht geefGerecht(String gerecht){
-        for(Gerecht g : gerechten){
-            if(g.getNaam().equals(gerecht)){
+
+    public Gerecht geefGerecht(String gerecht) {
+        for (Gerecht g : gerechten) {
+            if (g.getNaam().equals(gerecht)) {
                 return g;
             }
         }
         return null;
     }
+
     private GerechtSoort geefSoort(String soort) {
-//        for(GerechtSoort gs : gerechtSoorten){
-//            if(gs.getNaam().equals(soort))
-//                return gs;
-//        }
         return gerechtSoortService.geefGerechtSoort(soort);
     }
+
     public List<Gerecht> geefGerechten() {
         return gerechten;
     }
-    public ObservableList<String> geefAllergenen(){
+
+    public ObservableList<String> geefAllergenen() {
         List<String> resultString = new ArrayList<>();
-        for(Allergeen a : allergenen){
+        for (Allergeen a : allergenen) {
             resultString.add(a.getNaam());
         }
         ObservableList<String> result = FXCollections.observableList(resultString);
@@ -102,21 +110,22 @@ public class Controller {
     public List<String> zoekAllergenen(String text) {
         String lines[] = text.split("\\r?\\n");
         List<Gerecht> inputGerechten = new ArrayList<>();
-        for(int i = 0; i < lines.length; i++){
+        for (int i = 0; i < lines.length; i++) {
             inputGerechten.add(geefGerecht(lines[i].toLowerCase()));
         }
         List<String> allergenenGerechten = new ArrayList<>();
         inputGerechten.stream().forEach((g) -> {
-            if(g!=null)
-            allergenenGerechten.add(g.getAllergenenString());
-            else
+            if (g != null) {
+                allergenenGerechten.add(g.getAllergenenString());
+            } else {
                 allergenenGerechten.add(" ");
+            }
         });
         return allergenenGerechten;
-    }     
+    }
 
     public ObservableList<String> geefGerechtSoorten() throws SQLException {
-        
+
         List<String> resultString = new ArrayList<>();
         gerechtSoorten.stream().forEach((gs) -> {
             resultString.add(gs.getNaam());
@@ -131,7 +140,7 @@ public class Controller {
         gerecht.setSoort(geefSoort(gerechtSoort));
         List<Allergeen> allergenenList = new ArrayList<>();
         Object[] allergenenObject = allergenen.toArray();
-        for(int i = 0; i < allergenenObject.length; i++){
+        for (int i = 0; i < allergenenObject.length; i++) {
             allergenenList.add(geefAllergeen(allergenenObject[i].toString()));
         }
         gerecht.setAllergenen(allergenenList);
@@ -140,11 +149,19 @@ public class Controller {
     }
 
     public ObservableList<String> zetOmNaarObservableList(String text) {
-        String lines[] = text.split("\\r?\\n");
-        List<String> inputGerechten = new ArrayList<>();
-        for(int i = 0; i < lines.length; i++){
-            inputGerechten.add(lines[i]);
+        List<String> inputGerechten = null;
+        try {
+            String lines[] = text.split("\\r?\\n");
+            inputGerechten = new ArrayList<>();
+            for (int i = 0; i < lines.length; i++) {
+                inputGerechten.add(lines[i]);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Er is een fout ontstaan tijdens het verwerken van de gegevens.\n"
+                    + "Stuur volgende foutmelding door naar de ontwikkelaar: \n\n"
+                    + "Fout in Controller.zetOmNaarObservableList(): \n" + ex.getMessage());
         }
+
         return FXCollections.observableList(inputGerechten);
     }
 
@@ -158,11 +175,11 @@ public class Controller {
         gerecht.setSoort(geefSoort(gerechtSoort));
         List<Allergeen> allergenenList = new ArrayList<>();
         Object[] allergenenObject = allergenen.toArray();
-        for(int i = 0; i < allergenenObject.length; i++){
+        for (int i = 0; i < allergenenObject.length; i++) {
             allergenenList.add(geefAllergeen(allergenenObject[i].toString()));
         }
         gerecht.setAllergenen(allergenenList);
-        
+
         gerechtService.update(gerecht);
     }
 

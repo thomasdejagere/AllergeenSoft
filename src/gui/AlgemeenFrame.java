@@ -29,6 +29,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -66,7 +67,12 @@ public class AlgemeenFrame extends GridPane {
         loader.setController(this);
         try {
             loader.load();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
+            
+            JOptionPane.showMessageDialog(null, "Fout in de applicatie:\n"
+                    + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
+                    + "Fout in AlgemeenFrame.constructor(Controller): " + ex.getMessage()                    
+            );
             throw new RuntimeException(ex);
         }
         pasProductAanListView();
@@ -81,7 +87,10 @@ public class AlgemeenFrame extends GridPane {
         loader.setController(this);
         try {
             loader.load();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Fout in de applicatie:\n"
+                    + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
+                    + "Fout in AlgemeenFrame.constructor(Controller, String status): " + ex.getMessage() );
             throw new RuntimeException(ex);
         }
         lblStatus.setText(status);
@@ -224,9 +233,6 @@ public class AlgemeenFrame extends GridPane {
     }
 
     public void voegFoutieveGerechtToe() throws SQLException {
-        Set<String> foutieveGerecht = new HashSet<>();
-
-        foutieveGerecht.add(lstInput.getSelectionModel().getSelectedItem().toString());
         Stage stage = new Stage();
         Scene scene;
         VoegGerechtToeFrame frame = new VoegGerechtToeFrame(controller, this);

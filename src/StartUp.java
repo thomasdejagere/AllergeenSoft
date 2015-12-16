@@ -37,7 +37,9 @@ public class StartUp extends Application{
         });
         stage.show();
         } catch(Exception ex){
-            JOptionPane.showMessageDialog(null, "Fout, contacteer de ontwikkelaar en stuur hem deze foutcode door: \n" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Er is een fout ontstaan tijdens het laden van de applicatie\n"
+                    + "Stuur deze foutmelding door naar de ontwikkelaar:\n"
+                    + "in StartUp.java: " + ex.getMessage());
         }
         
     }

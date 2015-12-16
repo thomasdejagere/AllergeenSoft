@@ -11,6 +11,7 @@ import domain.Allergeen;
 import domain.Gerecht;
 import java.sql.SQLException;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,15 +25,30 @@ public class AllergeenService {
         allergeenDAO = new AllergeenDAO();
     }
     public List<Allergeen> geefAllergenen() throws SQLException{
-        allergeenDAO.startTransaction();
-        List<Allergeen> result = allergeenDAO.findAll();
+        List<Allergeen> result = null;
+        try{
+            allergeenDAO.startTransaction();
+        allergeenDAO.findAll();
         allergeenDAO.stopTransaction();
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
+                    + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
+                    + "Fout in AllergeenService.geefAllergenen(): \n" + ex.getMessage());
+        }
+        
         return result;
     }
     public Allergeen geefAllergeen(String allergeen){
-        allergeenDAO.startTransaction();
-        Allergeen a = allergeenDAO.findBy(allergeen);
-        allergeenDAO.stopTransaction();
+        Allergeen a = null;
+        try{
+            allergeenDAO.startTransaction();
+            allergeenDAO.findBy(allergeen);
+            allergeenDAO.stopTransaction();
+        } catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
+                    + "Stuur volgende foutmelding door naar de ontwikkelaar: \n\n"
+                    + "Fout in AllergeenService.geefAllergeen(): \n" + ex.getMessage());
+        }
         return a;
     }
             
