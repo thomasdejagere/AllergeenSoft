@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import domain.Allergeen;
@@ -10,10 +5,8 @@ import domain.Gerecht;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -32,7 +25,7 @@ public class GerechtDAO {
     }
 
     public void addGerecht(Gerecht gerecht) throws SQLException {
-        Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Esthio", "esthio", "dd4fm7xc");
+        Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Esthio", "esthio", "d4fm7xc");
         Statement statement = con.createStatement();
         int vorigeID = (int) em.createQuery("SELECT MAX(g.id) FROM Gerecht g").getSingleResult();
         vorigeID++;
