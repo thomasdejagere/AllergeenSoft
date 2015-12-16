@@ -32,7 +32,8 @@ public class GerechtService {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
-                    + "Fout in GerechtService.geefGerechten(): \n" + ex.getMessage());
+                    + "Fout in GerechtService.geefGerechten(): \n" + ex.getMessage() + "\n"
+                    + "Stack: " + ex.getStackTrace().toString());
         }
         return result;
     }
@@ -59,7 +60,8 @@ public class GerechtService {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
-                    + "Fout in GerechtService.remove(): \n" + ex.getMessage());
+                    + "Fout in GerechtService.remove(): \n" + ex.getMessage() + "\n"
+                    + "Stack: " + ex.getStackTrace().toString());
         }
 
     }

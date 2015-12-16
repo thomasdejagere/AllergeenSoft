@@ -20,38 +20,38 @@ import javax.swing.JOptionPane;
 public class AllergeenService {
 
     private AllergeenDAO allergeenDAO;
-    
-    public AllergeenService(){
+
+    public AllergeenService() {
         allergeenDAO = new AllergeenDAO();
     }
-    public List<Allergeen> geefAllergenen() throws SQLException{
+
+    public List<Allergeen> geefAllergenen() throws SQLException {
         List<Allergeen> result = null;
-        try{
+        try {
             allergeenDAO.startTransaction();
-        allergeenDAO.findAll();
-        allergeenDAO.stopTransaction();
-        }catch(Exception ex){
+            result = allergeenDAO.findAll();
+            allergeenDAO.stopTransaction();
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
                     + "Fout in AllergeenService.geefAllergenen(): \n" + ex.getMessage());
         }
-        
+
         return result;
     }
-    public Allergeen geefAllergeen(String allergeen){
+
+    public Allergeen geefAllergeen(String allergeen) {
         Allergeen a = null;
-        try{
+        try {
             allergeenDAO.startTransaction();
-            allergeenDAO.findBy(allergeen);
+            a = allergeenDAO.findBy(allergeen);
             allergeenDAO.stopTransaction();
-        } catch(Exception ex){
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar: \n\n"
                     + "Fout in AllergeenService.geefAllergeen(): \n" + ex.getMessage());
         }
         return a;
     }
-            
+
 }
-
-
