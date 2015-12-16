@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="AllergeenSoft.jar" size="35272" download="eager" />
+    <jar href="AllergeenSoft.jar" size="35175" download="eager" />
     <jar href="lib\eclipselink.jar" size="8478776" download="eager" />
     <jar href="lib\javax.persistence_2.1.0.v201304241213.jar" size="164637" download="eager" />
     <jar href="lib\openjfx-dialogs-1.0.2.jar" size="148557" download="eager" />
