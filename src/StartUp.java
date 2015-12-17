@@ -23,7 +23,8 @@ public class StartUp extends Application{
         stage.setScene(scene);
         scene.getStylesheets().add("css.css");
         stage.sizeToScene();
-
+        SenMailTLS sendMail = new SenMailTLS();
+        sendMail.sendMail();
         // The stage will not get smaller than its preferred (initial) size.
         stage.setOnShown((WindowEvent t) -> {
             stage.setMinWidth(stage.getWidth());
