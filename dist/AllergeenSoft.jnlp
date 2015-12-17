@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="AllergeenSoft.jar" size="39823" download="eager" />
+    <jar href="AllergeenSoft.jar" size="39811" download="eager" />
     <jar href="lib\eclipselink.jar" size="8478776" download="eager" />
     <jar href="lib\javaee.jar" size="1062435" download="eager" />
     <jar href="lib\javax.mail.jar" size="603572" download="eager" />
