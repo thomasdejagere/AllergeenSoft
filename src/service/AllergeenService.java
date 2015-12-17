@@ -23,11 +23,18 @@ public class AllergeenService {
         try {
             allergeenDAO.startTransaction();
             result = allergeenDAO.findAll();
-            allergeenDAO.stopTransaction();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
                     + "Fout in AllergeenService.geefAllergenen(): \n" + ex.getMessage());
+        } finally {
+            try {
+                if(allergeenDAO.isConnectionOpen()){
+                    allergeenDAO.stopTransaction();
+                }
+            }catch(Exception ex){
+                allergeenDAO.setConToNull();
+            }
         }
 
         return result;
@@ -38,11 +45,18 @@ public class AllergeenService {
         try {
             allergeenDAO.startTransaction();
             a = allergeenDAO.findBy(allergeen);
-            allergeenDAO.stopTransaction();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar: \n\n"
                     + "Fout in AllergeenService.geefAllergeen(): \n" + ex.getMessage());
+        } finally {
+            try {
+                if(allergeenDAO.isConnectionOpen()){
+                    allergeenDAO.stopTransaction();
+                }
+            }catch(Exception ex){
+                allergeenDAO.setConToNull();
+            }
         }
         return a;
     }

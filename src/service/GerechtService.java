@@ -23,11 +23,18 @@ public class GerechtService {
         try {
             gerechtDAO.startTransaction();
             result = gerechtDAO.findAll();
-            gerechtDAO.stopTransaction();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
                     + "Fout in GerechtService.geefGerechten(): \n" + ex.getMessage());
+        } finally {
+            try {
+                if(gerechtDAO.isConnectionOpen()){
+                    gerechtDAO.stopTransaction();
+                }
+            }catch(Exception ex){
+                gerechtDAO.setConToNull();
+            }
         }
         return result;
     }
@@ -37,11 +44,18 @@ public class GerechtService {
             gerechtDAO.startTransaction();
             gerechtDAO.update(gerecht);
             gerechtDAO.saveChanges();
-            gerechtDAO.stopTransaction();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
                     + "Fout in GerechtService.update(): \n" + ex.getMessage());
+        }finally {
+            try {
+                if(gerechtDAO.isConnectionOpen()){
+                    gerechtDAO.stopTransaction();
+                }
+            }catch(Exception ex){
+                gerechtDAO.setConToNull();
+            }
         }
     }
 
@@ -50,11 +64,18 @@ public class GerechtService {
             gerechtDAO.startTransaction();
             gerechtDAO.delete(gerecht);
             gerechtDAO.saveChanges();
-            gerechtDAO.stopTransaction();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
                     + "Fout in GerechtService.remove(): \n" + ex.getMessage());
+        } finally {
+            try {
+                if(gerechtDAO.isConnectionOpen()){
+                    gerechtDAO.stopTransaction();
+                }
+            }catch(Exception ex){
+                gerechtDAO.setConToNull();
+            }
         }
 
     }
@@ -64,11 +85,18 @@ public class GerechtService {
             gerechtDAO.startTransaction();
             gerechtDAO.addGerecht(gerecht);
             gerechtDAO.saveChanges();
-            gerechtDAO.stopTransaction();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
                     + "Fout in GerechtService.add(): \n" + ex.getMessage());
+        } finally {
+            try {
+                if(gerechtDAO.isConnectionOpen()){
+                    gerechtDAO.stopTransaction();
+                }
+            }catch(Exception ex){
+                gerechtDAO.setConToNull();
+            }
         }
     }
 }

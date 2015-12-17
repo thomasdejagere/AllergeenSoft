@@ -57,4 +57,12 @@ public class GerechtSoortDAO {
     public void stopTransaction() {
         em.close();
     }
+
+    public boolean isConnectionOpen() {
+        return em.isOpen();
+    }
+
+    public void setConToNull() {
+        em = null;
+    }
 }

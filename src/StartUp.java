@@ -17,7 +17,7 @@ public class StartUp extends Application{
     @Override
     public void start(Stage stage) throws SQLException {
         try{
-            Controller controller = new Controller();
+        Controller controller = new Controller();
         Scene scene = new Scene(new AlgemeenFrame(controller));
         stage.setTitle("AllergenenSoft");
         stage.setScene(scene);

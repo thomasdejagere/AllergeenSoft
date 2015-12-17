@@ -28,6 +28,14 @@ public class GerechtSoortService {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
                     + "Fout in GerechtSoortService.geefGerechtSoorten(): \n" + ex.getMessage());
+        } finally {
+            try {
+                if(gerechtSoortDAO.isConnectionOpen()){
+                    gerechtSoortDAO.stopTransaction();
+                }
+            }catch(Exception ex){
+                gerechtSoortDAO.setConToNull();
+            }
         }
 
         return result;
@@ -38,11 +46,18 @@ public class GerechtSoortService {
         try {
             gerechtSoortDAO.startTransaction();
             result = gerechtSoortDAO.findBy(soort);
-            gerechtSoortDAO.stopTransaction();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
                     + "Fout in GerechtSoortService.geefGerechtSoort(): \n" + ex.getMessage());
+        } finally {
+            try {
+                if(gerechtSoortDAO.isConnectionOpen()){
+                    gerechtSoortDAO.stopTransaction();
+                }
+            }catch(Exception ex){
+                gerechtSoortDAO.setConToNull();
+            }
         }
         return result;
     }
