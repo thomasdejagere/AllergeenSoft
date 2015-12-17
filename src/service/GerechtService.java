@@ -1,6 +1,7 @@
 package service;
 
 import DAO.GerechtDAO;
+import ErrorHandling.ErrorHandling;
 import domain.Gerecht;
 import java.sql.SQLException;
 import java.util.List;
@@ -27,6 +28,7 @@ public class GerechtService {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
                     + "Fout in GerechtService.geefGerechten(): \n" + ex.getMessage());
+            ErrorHandling.createStackTraceFile(ex.getStackTrace());
         } finally {
             try {
                 if(gerechtDAO.isConnectionOpen()){
@@ -48,6 +50,7 @@ public class GerechtService {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
                     + "Fout in GerechtService.update(): \n" + ex.getMessage());
+            ErrorHandling.createStackTraceFile(ex.getStackTrace());
         }finally {
             try {
                 if(gerechtDAO.isConnectionOpen()){
@@ -68,6 +71,7 @@ public class GerechtService {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
                     + "Fout in GerechtService.remove(): \n" + ex.getMessage());
+            ErrorHandling.createStackTraceFile(ex.getStackTrace());
         } finally {
             try {
                 if(gerechtDAO.isConnectionOpen()){
@@ -89,6 +93,7 @@ public class GerechtService {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
                     + "Fout in GerechtService.add(): \n" + ex.getMessage());
+            ErrorHandling.createStackTraceFile(ex.getStackTrace());
         } finally {
             try {
                 if(gerechtDAO.isConnectionOpen()){

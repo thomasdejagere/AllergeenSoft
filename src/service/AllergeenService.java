@@ -1,5 +1,6 @@
 package service;
 
+import ErrorHandling.ErrorHandling;
 import DAO.AllergeenDAO;
 import domain.Allergeen;
 import java.sql.SQLException;
@@ -27,6 +28,7 @@ public class AllergeenService {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
                     + "Fout in AllergeenService.geefAllergenen(): \n" + ex.getMessage());
+            ErrorHandling.createStackTraceFile(ex.getStackTrace());
         } finally {
             try {
                 if(allergeenDAO.isConnectionOpen()){
@@ -49,6 +51,7 @@ public class AllergeenService {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar: \n\n"
                     + "Fout in AllergeenService.geefAllergeen(): \n" + ex.getMessage());
+            ErrorHandling.createStackTraceFile(ex.getStackTrace());
         } finally {
             try {
                 if(allergeenDAO.isConnectionOpen()){

@@ -1,6 +1,7 @@
 package service;
 
 import DAO.GerechtSoortDAO;
+import ErrorHandling.ErrorHandling;
 import domain.GerechtSoort;
 import java.sql.SQLException;
 import java.util.List;
@@ -28,6 +29,7 @@ public class GerechtSoortService {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
                     + "Fout in GerechtSoortService.geefGerechtSoorten(): \n" + ex.getMessage());
+            ErrorHandling.createStackTraceFile(ex.getStackTrace());
         } finally {
             try {
                 if(gerechtSoortDAO.isConnectionOpen()){
@@ -50,6 +52,7 @@ public class GerechtSoortService {
             JOptionPane.showMessageDialog(null, "Fout in de databank.\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
                     + "Fout in GerechtSoortService.geefGerechtSoort(): \n" + ex.getMessage());
+            ErrorHandling.createStackTraceFile(ex.getStackTrace());
         } finally {
             try {
                 if(gerechtSoortDAO.isConnectionOpen()){
