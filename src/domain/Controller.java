@@ -4,6 +4,8 @@ import service.GerechtSoortService;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
@@ -149,7 +151,16 @@ public class Controller {
             String lines[] = text.split("\\r?\\n");
             inputGerechten = new ArrayList<>();
             for (int i = 0; i < lines.length; i++) {
-                inputGerechten.add(lines[i]);
+                Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+                Matcher m = p.matcher(lines[i]);
+                boolean b = m.find();
+                if(b){
+                    inputGerechten.add("");
+                } else {
+                    inputGerechten.add(lines[i]);
+                }
+                
+                
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Er is een fout ontstaan tijdens het verwerken van de gegevens.\n"

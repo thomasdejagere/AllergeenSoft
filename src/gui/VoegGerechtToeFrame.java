@@ -5,8 +5,11 @@ import domain.Gerecht;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -44,17 +47,18 @@ public class VoegGerechtToeFrame extends GridPane {
     private Button btnJa;
     @FXML
     private Button btnNee;
-    
+
     private Controller controller;
-    private Set<String> foutieveInput;
+    private HashSet<String> foutieveInput;
     private AlgemeenFrame algemeenFrame;
+
     public VoegGerechtToeFrame(Controller controller, AlgemeenFrame frame) throws SQLException {
         foutieveInput = new HashSet<>();
         constructor(controller, false, frame);
-        
+
     }
 
-    public VoegGerechtToeFrame(Controller controller, Set<String> foutieveInput, AlgemeenFrame frame) throws SQLException {
+    public VoegGerechtToeFrame(Controller controller, HashSet<String> foutieveInput, AlgemeenFrame frame) throws SQLException {
         this.foutieveInput = foutieveInput;
         constructor(controller, true, frame);
 
@@ -63,52 +67,69 @@ public class VoegGerechtToeFrame extends GridPane {
     public void slaOp() throws SQLException {
         String gerechtNaam = txtGerechtNaam.getText().toLowerCase();
         lblError.setText("");
+        Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(gerechtNaam);
+        boolean b = m.find();
+        
         boolean controle = true;
+        if (b) {
+            lblError.setText(lblError.getText() + "\n* Gerechtnaam mag geen speciale tekens bevatten!\n");
+            controle = false;
+        }
         if (cboGerechtSoort.getSelectionModel().getSelectedItem().toString().equals("Kies een gerechtsoort")) {
             lblError.setText(lblError.getText() + "* Selecteer een gerechtsoort\n");
             controle = false;
         }
-        if (txtGerechtNaam.getText().equals("")) {
+
+        if (txtGerechtNaam.getText()
+                .equals("")) {
             lblError.setText(lblError.getText() + "* Geef een gerechtnaam in\n");
             controle = false;
         }
         if (controle) {
-            if(controller.geefGerecht(txtGerechtNaam.getText()) != null){
+            if (controller.geefGerecht(txtGerechtNaam.getText()) != null) {
                 controller.pasProductAan(txtGerechtNaam.getText().toLowerCase(), cboGerechtSoort.getSelectionModel().getSelectedItem().toString(), lstAllergenen.getSelectionModel().getSelectedItems());
-            }else{
+            } else {
                 controller.voegGerechtToe(txtGerechtNaam.getText().toLowerCase(), cboGerechtSoort.getSelectionModel().getSelectedItem().toString(), lstAllergenen.getSelectionModel().getSelectedItems());
             }
-            
+
             txtGerechtNaam.setText("");
             cboGerechtSoort.getSelectionModel().clearSelection();
             lstAllergenen.getSelectionModel().clearSelection();
             lblStatus.setText("Gerecht is succesvol toegevoegd aan de databank.");
+            Iterator<String> iterator = foutieveInput.iterator();
+            gerechtNaam = gerechtNaam.toUpperCase();
+            while (iterator.hasNext()) {
+                if (iterator.next().equals(gerechtNaam)) {
+                    iterator.remove();
+                    break;
+                }
+            }
             foutieveInput.remove(gerechtNaam);
             if (!foutieveInput.isEmpty()) {
-            txtGerechtNaam.setText(this.foutieveInput.toArray()[0].toString());
+                txtGerechtNaam.setText(this.foutieveInput.toArray()[0].toString());
+            } else {
+                lblStatus.setText("Wilt u nog een gerecht \ntoevoegen/aanpassen?");
+                btnNee.setVisible(true);
+                btnJa.setVisible(true);
+                btnTerug.setVisible(false);
+                btnSlaOp.setVisible(false);
             }
-            else{
-               lblStatus.setText("Wilt u nog een gerecht \ntoevoegen/aanpassen?");
-               btnNee.setVisible(true);
-               btnJa.setVisible(true);
-               btnTerug.setVisible(false);
-               btnSlaOp.setVisible(false);
-            }
-        }
-        else{
+        } else {
             if (!lblError.getText().equals("")) {
-            lblError.setVisible(true);
+                lblError.setVisible(true);
+            }
+
         }
-        
-        }
-        
+
     }
 
     public void terug() {
         Stage thisStage = (Stage) btnTerug.getScene().getWindow();
         thisStage.close();
-        if(algemeenFrame.ietsInInput())
-        algemeenFrame.zoekAllergenen();
+        if (algemeenFrame.ietsInInput()) {
+            algemeenFrame.zoekAllergenen();
+        }
     }
 
     private void constructor(Controller controller, boolean foutieveInputBoolean, AlgemeenFrame frame) throws SQLException {
@@ -130,15 +151,17 @@ public class VoegGerechtToeFrame extends GridPane {
             txtGerechtNaam.setText(this.foutieveInput.toArray()[0].toString());
         }
     }
-    public void voegProductToe (String g){
+
+    public void voegProductToe(String g) {
         txtGerechtNaam.setText(g);
     }
+
     public void pasProductAan(String g) {
         lblTitel.setText("Pas product aan");
         Gerecht gerecht = controller.geefGerecht(g);
-        if(gerecht.getGerechtSoort() != null){
-        String soort = gerecht.getGerechtSoort().getNaam();
-        cboGerechtSoort.getSelectionModel().select(soort);
+        if (gerecht.getGerechtSoort() != null) {
+            String soort = gerecht.getGerechtSoort().getNaam();
+            cboGerechtSoort.getSelectionModel().select(soort);
         }
         List<String> allergenenInProduct = gerecht.getAllergenenList();
         allergenenInProduct.stream().forEach((s) -> {
@@ -146,12 +169,14 @@ public class VoegGerechtToeFrame extends GridPane {
         });
         txtGerechtNaam.setText(g);
     }
-    public void voegGeenGerechtMeerToe(){
+
+    public void voegGeenGerechtMeerToe() {
         btnSlaOp.setVisible(true);
         btnTerug.setVisible(true);
         terug();
     }
-    public void voegNogEenGerechtToe(){
+
+    public void voegNogEenGerechtToe() {
         btnSlaOp.setVisible(true);
         btnTerug.setVisible(true);
         btnJa.setVisible(false);

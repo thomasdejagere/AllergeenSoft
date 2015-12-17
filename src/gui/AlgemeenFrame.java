@@ -1,4 +1,3 @@
-
 package gui;
 
 import domain.Controller;
@@ -8,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,7 +51,7 @@ public class AlgemeenFrame extends GridPane {
     @FXML
     private Button btnVoegFoutieveGerechtToe;
     private Controller controller;
-    private Set<String> foutieveInput;
+    private HashSet<String> foutieveInput;
 
     public AlgemeenFrame(Controller controller) {
         this.controller = controller;
@@ -62,10 +62,10 @@ public class AlgemeenFrame extends GridPane {
         try {
             loader.load();
         } catch (Exception ex) {
-            
+
             JOptionPane.showMessageDialog(null, "Fout in de applicatie:\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
-                    + "Fout in AlgemeenFrame.constructor(Controller): " + ex.getMessage()                    
+                    + "Fout in AlgemeenFrame.constructor(Controller): " + ex.getMessage()
             );
             throw new RuntimeException(ex);
         }
@@ -84,7 +84,7 @@ public class AlgemeenFrame extends GridPane {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Fout in de applicatie:\n"
                     + "Stuur volgende foutmelding door naar de ontwikkelaar:\n\n"
-                    + "Fout in AlgemeenFrame.constructor(Controller, String status): " + ex.getMessage() );
+                    + "Fout in AlgemeenFrame.constructor(Controller, String status): " + ex.getMessage());
             throw new RuntimeException(ex);
         }
         lblStatus.setText(status);
@@ -93,10 +93,26 @@ public class AlgemeenFrame extends GridPane {
 
     public void zoekAllergenen() {
         if (!txaInput.getText().equals("")) {
-            lstInput.setItems(controller.zetOmNaarObservableList(txaInput.getText()));
+            foutieveInput = new HashSet<>();
+            ObservableList<String> allInputItems = controller.zetOmNaarObservableList(txaInput.getText());
+            for (String s : allInputItems) {
+                if (s != null) {
+                    if (!s.equals("")) {
+                        if (s.trim().length() != 0) {
+                            if (!controller.checkGerecht(s)) {
+                                foutieveInput.add(s);
+                            }
+                        }
+                    }
+                }
+            }
+            if(!foutieveInput.isEmpty()){
+                btnVoegFoutieveGerechtenToe.setVisible(true);
+            }
+            lstInput.setItems(allInputItems);
             lstInput.setVisible(true);
             txaInput.setVisible(false);
-            foutieveInput = new HashSet<>();
+
             List<String> result = controller.zoekAllergenen(txaInput.getText());
             if (!result.isEmpty() || result.get(0).equals(" ")) {
                 lstInput.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
@@ -114,8 +130,6 @@ public class AlgemeenFrame extends GridPane {
                                             if (!controller.checkGerecht(t)) {
                                                 if (!getStyleClass().contains("mystyleclass")) {
                                                     getStyleClass().add("mystyleclass");
-                                                    foutieveInput.add(t);
-                                                    btnVoegFoutieveGerechtenToe.setVisible(true);
                                                 } else {
                                                     getStyleClass().remove("mystyleclass");
                                                 }
@@ -162,10 +176,10 @@ public class AlgemeenFrame extends GridPane {
         toonAndereFrame(true);
     }
 
-    public void toonAndereFrame(boolean foutieveInput) throws SQLException {
+    public void toonAndereFrame(boolean isFoutieveInput) throws SQLException {
         Stage stage = new Stage();
         Scene scene;
-        if (foutieveInput) {
+        if (isFoutieveInput) {
             scene = new Scene(new VoegGerechtToeFrame(controller, this.foutieveInput, this));
         } else {
             scene = new Scene(new VoegGerechtToeFrame(controller, this));
