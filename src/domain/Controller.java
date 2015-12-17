@@ -159,8 +159,6 @@ public class Controller {
                 } else {
                     inputGerechten.add(lines[i]);
                 }
-                
-                
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Er is een fout ontstaan tijdens het verwerken van de gegevens.\n"

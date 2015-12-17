@@ -100,7 +100,7 @@ public class VoegGerechtToeFrame extends GridPane {
             Iterator<String> iterator = foutieveInput.iterator();
             gerechtNaam = gerechtNaam.toUpperCase();
             while (iterator.hasNext()) {
-                if (iterator.next().equals(gerechtNaam)) {
+                if (iterator.next().equalsIgnoreCase(gerechtNaam)) {
                     iterator.remove();
                     break;
                 }
