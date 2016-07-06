@@ -83,12 +83,13 @@ public class Gerecht implements Serializable {
     
     @Override
     public String toString(){
-        StringBuilder builder = new StringBuilder();
+        /*StringBuilder builder = new StringBuilder();
         builder.append(naam);
         for(Allergeen a : allergenen){
             builder.append(a);
         }
-        return builder.toString();
+        return builder.toString();*/
+        return getNaam();
     }
 
     public List<String> getAllergenenList() {
@@ -102,5 +103,4 @@ public class Gerecht implements Serializable {
     public List<Allergeen> getAllergenen() {
         return allergenen;
     }
-    
 }

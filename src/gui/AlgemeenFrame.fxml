@@ -26,35 +26,41 @@
          <GridPane.margin>
             <Insets left="25.0" />
          </GridPane.margin></TextArea>
-      <TextArea fx:id="txaOutput" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+      <TextArea fx:id="txaOutput" prefHeight="421.0" prefWidth="317.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
          <font>
             <Font name="Arial" size="16.0" />
          </font>
          <GridPane.margin>
             <Insets right="25.0" />
          </GridPane.margin></TextArea>
-      <Label text="Gerechten" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+      <Label text="GERECHTEN" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
          <font>
             <Font name="Arial" size="48.0" />
          </font>
+         <GridPane.margin>
+            <Insets bottom="15.0" />
+         </GridPane.margin>
       </Label>
-      <Label text="Allergenen" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+      <Label text="ALLERGENEN" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
          <font>
             <Font name="Arial" size="48.0" />
          </font>
+         <GridPane.margin>
+            <Insets bottom="15.0" />
+         </GridPane.margin>
       </Label>
-      <Button fx:id="btnOutput" mnemonicParsing="false" onAction="#zoekAllergenen" prefHeight="61.0" prefWidth="106.0" text="Zoek allergenen" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <Button fx:id="btnVoegGerechtToe" mnemonicParsing="false" onAction="#voegGerechtToe" prefHeight="38.0" prefWidth="190.0" text="Voeg gerecht toe" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <Button fx:id="btnOutput" mnemonicParsing="false" onAction="#zoekAllergenen" prefHeight="82.0" prefWidth="112.0" text="ZOEK" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Button fx:id="btnVoegGerechtToe" mnemonicParsing="false" onAction="#voegGerechtToe" prefHeight="38.0" prefWidth="190.0" text="Voeg gerecht toe" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
       <ListView fx:id="lstInput" prefHeight="200.0" prefWidth="200.0" visible="false" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="25.0" />
          </GridPane.margin></ListView>
-      <Button fx:id="btnNieuweInput" mnemonicParsing="false" onAction="#nieuweInput" prefHeight="38.0" text="Nieuwe input" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <Button fx:id="btnNieuweInput" mnemonicParsing="false" onAction="#nieuweInput" prefHeight="38.0" text="NIEUWE LIJST" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
       <Label fx:id="lblStatus" GridPane.rowIndex="2" />
-      <Button fx:id="btnVoegFoutieveGerechtenToe" mnemonicParsing="false" onAction="#voegFoutieveGerechtenToe" prefHeight="38.0" text="Voeg foutieve gerechten toe" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-      <Button fx:id="btnPasProductAan" mnemonicParsing="false" onAction="#pasProductAan" text="Pas product aan" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+      <Button fx:id="btnVoegFoutieveGerechtenToe" mnemonicParsing="false" onAction="#voegFoutieveGerechtenToe" prefHeight="79.0" prefWidth="111.0" text="VOEG TOE" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <Button fx:id="btnPasProductAan" alignment="CENTER" mnemonicParsing="false" onAction="#pasProductAan" prefHeight="38.0" prefWidth="112.0" text="PAS AAN" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
          <GridPane.margin>
-            <Insets top="125.0" />
+            <Insets />
          </GridPane.margin>
       </Button>
       <Button fx:id="btnVoegFoutieveGerechtToe" mnemonicParsing="false" onAction="#voegFoutieveGerechtToe" text="Voeg gerecht toe" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">

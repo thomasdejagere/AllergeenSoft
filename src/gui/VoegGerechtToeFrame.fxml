@@ -38,15 +38,18 @@
          <GridPane.margin>
             <Insets right="25.0" />
          </GridPane.margin></ComboBox>
-      <Label text="Groepsoort" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <Label text="Gerechtnaam" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <Label fx:id="lblGerechtsoort" text="Gerechtsoort" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Label fx:id="lblGerechtnaam" text="Gerechtnaam" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
       <Label text="Allergenen" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
       <Label fx:id="lblStatus" textFill="#3cbc3a" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <Button fx:id="btnTerug" maxWidth="-Infinity" mnemonicParsing="false" onAction="#terug" prefHeight="25.0" prefWidth="125.0" text="Annuleer" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets right="25.0" />
          </GridPane.margin></Button>
-      <Label fx:id="lblError" textFill="#ff0606" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label fx:id="lblError" textFill="#ff0606" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <font>
+            <Font size="19.0" />
+         </font></Label>
       <Label fx:id="lblTitel" text="Voeg een gerecht toe" GridPane.columnIndex="1">
          <font>
             <Font name="System Bold" size="28.0" />

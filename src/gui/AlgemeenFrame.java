@@ -50,6 +50,9 @@ public class AlgemeenFrame extends GridPane {
     private Button btnPasProductAan;
     @FXML
     private Button btnVoegFoutieveGerechtToe;
+    @FXML
+    private Button btnNieuweInput;
+    
     private Controller controller;
     private HashSet<String> foutieveInput;
 
@@ -92,6 +95,9 @@ public class AlgemeenFrame extends GridPane {
     }
 
     public void zoekAllergenen() {
+        btnOutput.setVisible(false);
+        btnNieuweInput.setVisible(true);
+        btnVoegFoutieveGerechtenToe.setVisible(false);
         if (!txaInput.getText().equals("")) {
             foutieveInput = new HashSet<>();
             ObservableList<String> allInputItems = controller.zetOmNaarObservableList(txaInput.getText());
@@ -108,6 +114,9 @@ public class AlgemeenFrame extends GridPane {
             }
             if(!foutieveInput.isEmpty()){
                 btnVoegFoutieveGerechtenToe.setVisible(true);
+                txaOutput.setDisable(true);
+            } else {
+                txaOutput.setDisable(false);
             }
             lstInput.setItems(allInputItems);
             lstInput.setVisible(true);
@@ -161,6 +170,9 @@ public class AlgemeenFrame extends GridPane {
     }
 
     public void nieuweInput() {
+        lstInput.getSelectionModel().select(0);
+        btnOutput.setVisible(true);
+        btnNieuweInput.setVisible(false);
         lstInput.setVisible(false);
         txaInput.setVisible(true);
         txaInput.setText("");
@@ -172,7 +184,6 @@ public class AlgemeenFrame extends GridPane {
     }
 
     public void voegFoutieveGerechtenToe() throws SQLException {
-        btnVoegFoutieveGerechtenToe.setVisible(false);
         toonAndereFrame(true);
     }
 
@@ -224,11 +235,9 @@ public class AlgemeenFrame extends GridPane {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (lstInput.getSelectionModel().getSelectedItem() != null) {
                     if (!controller.checkGerecht(lstInput.getSelectionModel().getSelectedItem().toString())) {
-                        btnVoegFoutieveGerechtToe.setVisible(true);
                         btnPasProductAan.setVisible(false);
                     } else {
                         btnPasProductAan.setVisible(true);
-                        btnVoegFoutieveGerechtToe.setVisible(false);
                     }
                 }
             }

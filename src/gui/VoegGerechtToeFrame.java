@@ -19,6 +19,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -47,7 +48,11 @@ public class VoegGerechtToeFrame extends GridPane {
     private Button btnJa;
     @FXML
     private Button btnNee;
-
+    @FXML
+    private Label lblGerechtsoort;
+    @FXML
+    private Label lblGerechtnaam;
+    
     private Controller controller;
     private HashSet<String> foutieveInput;
     private AlgemeenFrame algemeenFrame;
@@ -72,22 +77,33 @@ public class VoegGerechtToeFrame extends GridPane {
         boolean b = m.find();
         
         boolean controle = true;
+        
+        lblGerechtnaam.setTextFill(Color.BLACK);
+        lblGerechtsoort.setTextFill(Color.BLACK);
+            
         if (b) {
             lblError.setText(lblError.getText() + "\n* Gerechtnaam mag geen speciale tekens bevatten!\n");
+            lblGerechtnaam.setTextFill(Color.RED);
             controle = false;
         }
-        if (cboGerechtSoort.getSelectionModel().getSelectedItem().toString().equals("Kies een gerechtsoort")) {
+        if(cboGerechtSoort.getSelectionModel().getSelectedItem() == null || cboGerechtSoort.getSelectionModel().getSelectedItem().toString().equals("Kies een gerechtsoort")){
             lblError.setText(lblError.getText() + "* Selecteer een gerechtsoort\n");
+            lblGerechtsoort.setTextFill(Color.RED);
             controle = false;
         }
-
+        
         if (txtGerechtNaam.getText()
                 .equals("")) {
             lblError.setText(lblError.getText() + "* Geef een gerechtnaam in\n");
+            lblGerechtnaam.setTextFill(Color.RED);
             controle = false;
         }
         if (controle) {
-            if (controller.geefGerecht(txtGerechtNaam.getText()) != null) {
+            lblGerechtnaam.setTextFill(Color.BLACK);
+            lblGerechtsoort.setTextFill(Color.BLACK);
+            String debug2 = txtGerechtNaam.getText();
+            Gerecht debug = controller.geefGerecht(txtGerechtNaam.getText());
+            if (controller.geefGerecht(txtGerechtNaam.getText().toLowerCase()) != null) {
                 controller.pasProductAan(txtGerechtNaam.getText().toLowerCase(), cboGerechtSoort.getSelectionModel().getSelectedItem().toString(), lstAllergenen.getSelectionModel().getSelectedItems());
             } else {
                 controller.voegGerechtToe(txtGerechtNaam.getText().toLowerCase(), cboGerechtSoort.getSelectionModel().getSelectedItem().toString(), lstAllergenen.getSelectionModel().getSelectedItems());
@@ -109,13 +125,15 @@ public class VoegGerechtToeFrame extends GridPane {
             if (!foutieveInput.isEmpty()) {
                 txtGerechtNaam.setText(this.foutieveInput.toArray()[0].toString());
             } else {
-                lblStatus.setText("Wilt u nog een gerecht \ntoevoegen/aanpassen?");
+                voegGeenGerechtMeerToe();
+                /*lblStatus.setText("Wilt u nog een gerecht \ntoevoegen/aanpassen?");
                 btnNee.setVisible(true);
                 btnJa.setVisible(true);
                 btnTerug.setVisible(false);
-                btnSlaOp.setVisible(false);
+                btnSlaOp.setVisible(false);*/
             }
         } else {
+            lblStatus.setText("");
             if (!lblError.getText().equals("")) {
                 lblError.setVisible(true);
             }
@@ -158,7 +176,7 @@ public class VoegGerechtToeFrame extends GridPane {
 
     public void pasProductAan(String g) {
         lblTitel.setText("Pas product aan");
-        Gerecht gerecht = controller.geefGerecht(g);
+        Gerecht gerecht = controller.geefGerecht(g.toLowerCase());
         if (gerecht.getGerechtSoort() != null) {
             String soort = gerecht.getGerechtSoort().getNaam();
             cboGerechtSoort.getSelectionModel().select(soort);
