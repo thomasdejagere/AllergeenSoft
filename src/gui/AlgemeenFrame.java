@@ -204,8 +204,15 @@ public class AlgemeenFrame extends GridPane {
             stage.setMinWidth(stage.getWidth());
             stage.setMinHeight(stage.getHeight());
         });
-        stage.show();
-    }
+        stage.setOnCloseRequest((WindowEvent event1) -> {
+            try {
+                zoekAllergenen();
+            } catch (Exception ex) {
+            }
+        });
+
+            stage.show();
+        }
 
     public void pasProductAan() throws SQLException {
         Stage stage = new Stage();
