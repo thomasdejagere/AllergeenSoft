@@ -169,7 +169,7 @@ public class AlgemeenFrame extends GridPane {
     }
 
     public void nieuweInput() {
-        lstInput.getSelectionModel().select(0);
+        lstInput.getSelectionModel().select(-1);
         btnOutput.setVisible(true);
         btnNieuweInput.setVisible(false);
         lstInput.setVisible(false);
